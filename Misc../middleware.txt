@@ -2,3 +2,20 @@
 ==> middleware allows to automatically pass the incoming request through a bunch of function by expressjs
 ==>this allows that the request handler will not have a single function handle all the request insted request handler will have
     multiple function to handle request until response is sent back.
+
+
+
+
+important note about middleware
+1..
+never use next() after sending the response because we do not want to send two response to a same routes
+2..
+while using the use () function of express the never use '/' route at first because it is a default route and
+if we use any random route starting with '/' route ,we will always get to '/' route. so make sure to use the '/' route at last .
+eg;if we have sent webpage with content <h1>Welcome to Home page </h1> in route '/'
+        we have another  webpage eith content <h2>History</h2> in route '/History'
+
+        and if we have used home page at first ,Even if we go to '/History' route we will only get to "/" route.
+
+
+    To avoid this problem always use the default route '/' at last.
