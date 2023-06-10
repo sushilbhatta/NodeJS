@@ -1,6 +1,24 @@
-const http=require('http')
-const routes=require('./routes.js')
- const server=http.createServer(routes);
+const http=require('http');
+
+const express=require('express');
+
+const app=express();
+
+app.use((req,res,next)=>{
+    console.log("First Middleware")
+    next(); //this allows to continue the req to the next middleware.
+});
+app.use((req,res,next)=>{
+    console.log('Second middleware')
+    res.send('<h1>Hello from express</h1>')
+})
+
+ const server=http.createServer(app);
+
+
+
+
+
 server.listen(5000,()=>{
-    console.log("Server is runni ng at port 5000")
+    console.log("Server is running at port 5000")
 }); 

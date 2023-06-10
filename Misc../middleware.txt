@@ -1,0 +1,4 @@
+==> core concept of the expressJs
+==> middleware allows to automatically pass the incoming request through a bunch of function by expressjs
+==>this allows that the request handler will not have a single function handle all the request insted request handler will have
+    multiple function to handle request until response is sent back.
