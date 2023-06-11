@@ -2,21 +2,27 @@ const path=require('path')
 const bodyParser = require('body-parser');
 const express=require('express');
 
-const adminRoutes=require('./routes/admin')
+const adminData=require('./routes/admin')
 const shopRoutes=require('./routes/shop')
 
 const app=express()
 
+//body parsing
 app.use(bodyParser.urlencoded({extended:false}))
+
+//serving css file statically
 app.use(express.static(path.join(__dirname,'public')))
- 
-app.use('/admin',adminRoutes)
+
+// routes
+app.use('/admin',adminData.routes)
 app.use(shopRoutes)
 
+// 404 error handling
 app.use((req,res,next)=>{
     res.status(404).sendFile(path.join(__dirname,'views','404.html'))
 })
 
+// server listner
 app.listen(5000,()=>{
     console.log('port is running at port  5000')
 })
