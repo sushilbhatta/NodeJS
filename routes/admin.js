@@ -18,4 +18,4 @@ router.post('/add-product',(req,res)=>{
 })
 
 exports.routes=router
-exports.product=products
+exports.products=products

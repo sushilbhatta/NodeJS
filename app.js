@@ -6,6 +6,8 @@ const adminData=require('./routes/admin')
 const shopRoutes=require('./routes/shop')
 
 const app=express()
+app.set('view engine','pug');
+app.set('views','views')
 
 //body parsing
 app.use(bodyParser.urlencoded({extended:false}))
