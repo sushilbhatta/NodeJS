@@ -1,32 +1,21 @@
-doctype html
-html(lang="en")
-    head
-        meta(charset="UTF-8")
-        meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        title #{docTitle}
-        link(rel="stylesheet", href="/css/main.css")
-        link(rel="stylesheet", href="/css/product.css")
-    body 
-        header.main-header
-            nav.main-header__nav
-                ul.main-header__item-list
-                    li.main-header__item
-                        a.active(href="/") Shop
-                    li.main-header__item
-                        a(href="/admin/add-product") Add Product
-        main 
-            if prods.length>0   
-                .grid
-                    each product in prods 
-                        article.card.product-item
-                            header.card__header
-                                h1.product__title #{product.title}
-                            card__image
-                                img(src="https://bubblecow.com/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBb01EIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--635ffa29153934bb008d40e17c79f5df705b6fe5/Optimized-book_editing.png", alt="A Book")
-                            card__content
-                                h2.product__price $19.99
-                                p.product__description A very interesting book about so many even more interesting things!
-                            card__actions
-                                button.btn Add to Cart
-            else
-                h1 No products
+extends layouts/main_layout.pug
+block styles   
+    link(rel="stylesheet", href="/css/product.css")
+
+block content 
+    main 
+        if prods.length>0   
+            .grid
+                each product in prods 
+                    article.card.product-item
+                        header.card__header
+                            h1.product__title #{product.title}
+                        card__image
+                            img(src="https://bubblecow.com/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBb01EIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--635ffa29153934bb008d40e17c79f5df705b6fe5/Optimized-book_editing.png", alt="A Book")
+                        card__content
+                            h2.product__price $19.99
+                            p.product__description A very interesting book about so many even more interesting things!
+                        card__actions
+                            button.btn Add to Cart
+        else
+            h1 No products
