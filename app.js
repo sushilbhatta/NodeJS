@@ -22,7 +22,7 @@ app.use(shopRoutes)
 
 // 404 error handling
 app.use((req,res,next)=>{
-    res.status(404).render('404',{docTitle:'Page not found'})
+    res.status(404).render('404',{docTitle:'Page not found',path:'Error'})
     // res.status(404).sendFile(path.join(__dirname,'views','404.html'))
 })
 
