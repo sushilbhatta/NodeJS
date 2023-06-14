@@ -4,7 +4,7 @@ const express=require('express');
 
 const adminRoutes=require('./routes/admin')
 const shopRoutes=require('./routes/shop')
-
+const errorController=require('./controllers/404')
 const app=express()
 // app.set('view engine','pug');
 app.set('view engine','ejs')
@@ -21,10 +21,7 @@ app.use('/admin',adminRoutes)
 app.use(shopRoutes)
 
 // 404 error handling
-app.use((req,res,next)=>{
-    res.status(404).render('404',{docTitle:'Page not found',path:'Error'})
-    // res.status(404).sendFile(path.join(__dirname,'views','404.html'))
-})
+app.use(errorController.error)
 
 // server listner
 app.listen(5000,()=>{
