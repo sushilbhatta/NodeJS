@@ -4,7 +4,7 @@ const express=require('express');
 
 const adminRoutes=require('./routes/admin')
 const shopRoutes=require('./routes/shop')
-const errorController=require('./controllers/404')
+const errorController=require('./controllers/error')
 const app=express()
 // app.set('view engine','pug');
 app.set('view engine','ejs')
