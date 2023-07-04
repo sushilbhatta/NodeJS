@@ -38,4 +38,13 @@ module.exports = class Product {
   static fetchAll(cb) {
     getProductsFromFile(cb);
   }
+  static findById(id,cb){
+    getProductsFromFile(products=>{  //this fn takes the single argument which is call back fn 
+      const product=products.find(p=>p.id===id) //if database ma vayeko id(p.id) and userly req gareko id equal xa vane equal vayeko product return gar.  
+      cb(product) //yo fn ko defn  yeta xaina  program ko kunai thau ma define va xa but call yrta vayera argument send gaardai xa.
+        // yo callback jata define hunxa teta yo callback ly data pathaunaxa in the form of arguments.
+    })
+  }
 };
+
+
