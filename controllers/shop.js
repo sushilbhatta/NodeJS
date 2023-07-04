@@ -19,7 +19,6 @@ exports.getProduct=(req,res,next)=>{
       path:'/products'
     })
   })
-
 }
 
 exports.getIndex = (req, res, next) => {
@@ -38,13 +37,14 @@ exports.getCart = (req, res, next) => {
     pageTitle: 'Your Cart'
   });
 };
-exports.postCart=(req,res,next)=>{
-  const prodId=req.body.productId;
-Product.findById(prodId,(product)=>{ //findById fn calling takes the cb as an arguments.
-  Cart.addProduct(prodId,product.price) //calling the class with parameters.
-})
-  res.redirect('/cart')
-}
+exports.postCart = (req, res, next) => {
+  const prodId = req.body.productId;
+  Product.findById(prodId, product => {
+    Cart.addProduct(prodId, product.price);
+  });
+  console.log(prodId)
+  res.redirect('/cart');
+};
 
 exports.getOrders = (req, res, next) => {
   res.render('shop/orders', {
