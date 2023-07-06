@@ -37,4 +37,31 @@ module.exports = class Cart {
       });
     });
   }
+  //delete item from cart
+  static deleteProduct(id,productPrice){ //we ll need the product price cause deleting the cart item will change the total cart item price
+    fs.readFile(p,(err,fileContent)=>{
+      if(err){
+        return;//if due to any reason cart is not red then it will not have anything to delete .
+      }
+     //the below line parse the file  into js object.
+      const updatedCart={...JSON.parse(fileContent)} 
+    
+      //product id is matched with the selected product's id.If matched it is returned.
+      const product=updatedCart.products.find(prod=>prod.id===id) 
+
+      //object key qty: is accessed. it holds the number of the particular items.
+      const productQty=product.qty
+
+      //product of the updaeted cart  are filtered.those product items whose id do not matches the selected items id is returned 
+      updatedCart.products=updatedCart.products.filter(prod=>prod.id!==id) 
+
+      //total cart price is updated
+      updatedCart.totalPrice=updatedCart.totalPrice-productPrice*productQty
+
+      // write the updated products to the file
+      fs.writeFile(p,JSON.stringify(updatedCart),err=>{console.log(err)})
+    })
+
+  }
+
 };
