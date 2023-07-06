@@ -29,6 +29,7 @@ module.exports = class Product {
 
   save() {
     getProductsFromFile(products => {
+      //if product already exit ie it contains id
       if (this.id) {
         let existingProductIndex=products.findIndex(prod=>prod.id===this.id)
         const updatedProducts=[...products];
@@ -36,6 +37,7 @@ module.exports = class Product {
         fs.writeFile(p, JSON.stringify(updatedProducts), err => {
           console.log(err);
         });
+        //if id is null ie first time product get added.
       }else{
         this.id=Math.random().toString();
         products.push(this);
