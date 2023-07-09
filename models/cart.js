@@ -45,10 +45,12 @@ module.exports = class Cart {
       }
      //the below line parse the file  into js object.
       const updatedCart={...JSON.parse(fileContent)} 
-    
+   
       //product id is matched with the selected product's id.If matched it is returned.
       const product=updatedCart.products.find(prod=>prod.id===id) 
-
+      if(!product) {
+        return
+      }
       //object key qty: is accessed. it holds the number of the particular items.
       const productQty=product.qty
 
