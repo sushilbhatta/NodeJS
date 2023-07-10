@@ -2,17 +2,7 @@ const path = require('path');
 
 const express = require('express');
 const bodyParser = require('body-parser');
-
 const errorController = require('./controllers/error');
-const db=require('./util/database')
-
-
-db.execute('SELECT * FROM products')
-.then(result=>{
-    console.log(result[0])
-    console.log(result[1]);
-})
-.catch(err=>console.log(err))
 const app = express();
 
 app.set('view engine', 'ejs');
@@ -29,4 +19,4 @@ app.use(shopRoutes);
 
 app.use(errorController.get404);
 
-app.listen(5000);
+app.listen(4000);
