@@ -18,8 +18,17 @@ main {
 form {
   display: inline;
 }
-.centered{
+
+.centered {
   text-align: center;
+}
+
+.image {
+  height: 20rem;
+}
+
+.image img {
+  max-height: 100%;
 }
 
 .main-header {
