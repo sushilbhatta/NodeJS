@@ -8,7 +8,9 @@ exports.getAddProduct = (req, res, next) => {
   });
 };
 exports.getProducts = (req, res, next) => {
-  Product.findAll()
+  // Product.findAll()
+  req.user
+    .getProducts()
     .then((products) => {
       res.render("admin/products", {
         prods: products,
@@ -25,14 +27,24 @@ exports.postAddProduct = (req, res, next) => {
   const imageUrl = req.body.imageUrl;
   const price = req.body.price;
   const description = req.body.description;
-  Product.create({
-    title: title,
-    imageUrl: imageUrl,
-    price: price,
-    description: description,
-  })
+  req.user
+    .createProduct({
+      //createProduct is the method provided to associations.The Product in the createProduct is the  modulename.
+      title: title,
+      imageUrl: imageUrl,
+      price: price,
+      description: description,
+    })
+    // Product.create({
+    //   title: title,
+    //   imageUrl: imageUrl,
+    //   price: price,
+    //   description: description,
+    //   userId: req.user.id,
+    // })
     .then((result) => {
       console.log(result);
+      res.redirect("/admin/products");
     })
     .catch((error) => {
       console.log(error);
@@ -41,21 +53,27 @@ exports.postAddProduct = (req, res, next) => {
 
 exports.getEditProduct = (req, res, next) => {
   const editMode = req.query.edit;
+  console.log(editMode);
   if (!editMode) {
     return res.redirect("/");
   }
   const prodId = req.params.productId;
-  Product.findById(prodId, (product) => {
-    if (!product) {
-      return res.redirect("/");
-    }
-    res.render("admin/edit-product", {
-      pageTitle: "Edit Product",
-      path: "/admin/edit-product",
-      editing: editMode,
-      product: product,
-    });
-  });
+  req.user
+    .getProducts({ where: { id: prodId } })
+    // Product.findByPk(prodId)
+    .then((products) => {
+      const product = products[0];
+      if (!product) {
+        return res.redirect("/");
+      }
+      res.render("admin/edit-product", {
+        pageTitle: "Edit Product",
+        path: "/admin/edit-product",
+        editing: editMode,
+        product: product,
+      });
+    })
+    .catch((err) => console.log(err));
 };
 exports.postEditProducts = (req, res, next) => {
   const prodId = req.body.productId;
@@ -63,19 +81,34 @@ exports.postEditProducts = (req, res, next) => {
   const updatedImageUrl = req.body.imageUrl;
   const updatedPrice = req.body.price;
   const updatedDescription = req.body.description;
-  const updatesProducts = new Product(
-    prodId,
-    updatedTitle,
-    updatedImageUrl,
-    updatedDescription,
-    updatedPrice
-  );
-  updatesProducts.save();
-  res.redirect("/admin/products");
+  Product.findByPk(prodId)
+    .then((product) => {
+      product.title = updatedTitle;
+      product.imageUrl = updatedImageUrl;
+      product.price = updatedPrice;
+      product.description = updatedDescription;
+      return product.save(); //save method save the updated value to database if record are new it enter them to db too.
+    })
+    .then((result) => {
+      console.log("UPDATED PRODUCT");
+      res.redirect("/admin/products");
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .catch((err) => console.log(err));
 };
 
 exports.postDeleteProduct = (req, res, next) => {
   const prodId = req.body.productId;
-  Product.deleteById(prodId);
-  res.redirect("/admin/products");
+  Product.findByPk(prodId)
+    .then((product) => {
+      return product.destroy();
+    })
+    .then((result) => {
+      console.log("Item Distroyed");
+      res.redirect("/admin/products");
+    })
+    .catch((err) => console.log(err))
+    .catch((err) => console.log(err));
 };
